@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 
 public class Board {
-  private int[][] mBoard;
+  private final int[][] mBoard;
 
   public Board(int[][] blocks) {
     // construct a board from an N-by-N array of blocks
@@ -70,7 +70,7 @@ public class Board {
   }
 
   private int[] expectedPosition(int n) {
-    int[] position = { (n - 1) / 3, (n - 1) % dimension() };
+    int[] position = { (n - 1) / dimension(), (n - 1) % dimension() };
     return position;
   }
 
@@ -80,17 +80,15 @@ public class Board {
   }
 
   public Board twin() {
-    int[][] board = new int[dimension()][dimension()];
-
     for (int y = 0; y < dimension(); y++) {
       for (int x = 0; x < dimension() - 1; x++) {
-        if (board[y][x] != 0 && board[y][x + 1] != 0) {
+        if (mBoard[y][x] != 0 && mBoard[y][x + 1] != 0) {
           return swap(y, x + 1, y, x);
         }
       }
     }
 
-    return new Board(board);
+    return null;
   }
 
   public boolean equals(Object x) {
@@ -114,17 +112,23 @@ public class Board {
     int emptyPositionY = emptyPosition[0];
     int emptyPositionX = emptyPosition[1];
 
-    if (emptyPositionY - 1 > 0) {
-      list.add(swap(emptyPositionX, emptyPositionY, emptyPositionX, emptyPositionY - 1));
+    // System.out.println(emptyPositionY + " " + emptyPositionX);
+
+    if (emptyPositionY - 1 >= 0) {
+      list.add(swap(emptyPositionY, emptyPositionX, emptyPositionY - 1,
+          emptyPositionX));
     }
     if (emptyPositionY + 1 < dimension()) {
-      list.add(swap(emptyPositionX, emptyPositionY, emptyPositionX, emptyPositionY + 1));
+      list.add(swap(emptyPositionY, emptyPositionX, emptyPositionY + 1,
+          emptyPositionX));
     }
-    if (emptyPositionX - 1 > 0) {
-      list.add(swap(emptyPositionX, emptyPositionY, emptyPositionX - 1, emptyPositionY));
+    if (emptyPositionX - 1 >= 0) {
+      list.add(swap(emptyPositionY, emptyPositionX, emptyPositionY,
+          emptyPositionX - 1));
     }
     if (emptyPositionX + 1 < dimension()) {
-      list.add(swap(emptyPositionX, emptyPositionY, emptyPositionX + 1, emptyPositionY));
+      list.add(swap(emptyPositionY, emptyPositionX, emptyPositionY,
+          emptyPositionX + 1));
     }
 
     return list;
@@ -142,8 +146,7 @@ public class Board {
 
   private Board swap(int y1, int x1, int y2, int x2) {
     int[][] board = new int[dimension()][dimension()];
-    board = mBoard.clone();
-    
+
     for (int i = 0; i < board.length; i++) {
       System.arraycopy(mBoard[i], 0, board[i], 0, mBoard[0].length);
     }
