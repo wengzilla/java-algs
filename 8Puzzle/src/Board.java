@@ -159,7 +159,7 @@ public class Board {
 
   public String toString() {
     // string representation of the board (in the output format specified below)
-    String board = "";
+    String board = dimension() + "\n";
 
     for (int y = 0; y < dimension(); y++) {
       for (int x = 0; x < dimension(); x++) {

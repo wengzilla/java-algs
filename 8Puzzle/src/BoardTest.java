@@ -78,7 +78,7 @@ public class BoardTest {
   public void testToString() {
     int[][] blocks0 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 0 } };
     Board board0 = new Board(blocks0);
-    assertEquals("1 2 3\n4 5 6\n7 8 0", board0.toString());
+    assertEquals("3\n1 2 3\n4 5 6\n7 8 0", board0.toString());
   }
 
   @Test
