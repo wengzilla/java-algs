@@ -50,7 +50,7 @@ public class BoardTest {
     Board board2 = new Board(blocks2);
     assertEquals(10, board2.manhattan());
 
-    int[][] blocks3 = { { 1, 2, 3, 4 }, { 4, 5, 6, 7 }, { 7, 8, 9, 0 } };
+    int[][] blocks3 = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 0 } };
     Board board3 = new Board(blocks3);
     assertEquals(0, board3.manhattan());
 

@@ -6,7 +6,13 @@ public class Board {
   public Board(int[][] blocks) {
     // construct a board from an N-by-N array of blocks
     // (where blocks[i][j] = block in row i, column j)
-    mBoard = blocks;
+    
+    // make deep copy so that mBoard doesn't change if board changes...
+    mBoard = new int[blocks[0].length][blocks[0].length];
+
+    for (int i = 0; i < blocks.length; i++) {
+      System.arraycopy(blocks[i], 0, mBoard[i], 0, blocks[0].length);
+    }
   }
 
   public int dimension() {
@@ -16,7 +22,7 @@ public class Board {
 
   public int hamming() {
     // number of blocks out of place
-    int current_number = 0;
+    int currentNumber = 0;
     int hammingCount = 0;
 
     for (int y = 0; y < dimension(); y++) {
@@ -25,9 +31,9 @@ public class Board {
         if (y == (dimension() - 1) && x == (dimension() - 1))
           continue;
         else {
-          current_number = x + y * dimension() + 1;
+          currentNumber = x + y * dimension() + 1;
           // System.out.println(y + " " + x + " " + current_number);
-          if (current_number != mBoard[y][x]) {
+          if (currentNumber != mBoard[y][x]) {
             hammingCount++;
             // System.out.println(hamming_count + " " + current_number);
           }
@@ -101,7 +107,6 @@ public class Board {
     if (x.getClass() != this.getClass())
       return false;
 
-    Board that = (Board) x;
     return toString().equals(x.toString());
   }
 
@@ -137,8 +142,9 @@ public class Board {
   private int[] emptyPosition() {
     for (int y = 0; y < dimension(); y++) {
       for (int x = 0; x < dimension(); x++) {
-        if (mBoard[y][x] == 0)
+        if (mBoard[y][x] == 0) {
           return (new int[] { y, x });
+        }
       }
     }
     return null;
@@ -164,9 +170,11 @@ public class Board {
     for (int y = 0; y < dimension(); y++) {
       for (int x = 0; x < dimension(); x++) {
         board += mBoard[y][x];
-        board += (x == dimension() - 1) ? "" : " ";
+        if (x == dimension() - 1) board += "";
+        else board += " ";
       }
-      board += (y == dimension() - 1) ? "" : "\n";
+      if (y == dimension() - 1) board += "";
+      else board += "\n";
     }
 
     return board;

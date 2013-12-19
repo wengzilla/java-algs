@@ -1,13 +1,11 @@
-import java.util.ArrayList;
 import java.util.Comparator;
-
 
 public class Solver {
   private MinPQ<Node> initialPQ;
   private MinPQ<Node> initialTwinPQ;
   private Node currentNode;
   private Node currentTwinNode;
-  private ArrayList<Board> solution = new ArrayList<Board>();
+  private Stack<Board> solution = new Stack<Board>();
 
   public Solver(Board initial) {
     // find a solution to the initial board (using the A* algorithm)
@@ -58,7 +56,7 @@ public class Solver {
     // min number of moves to solve initial board; -1 if no solution
     
     if (isSolvable()) {
-      return ((ArrayList<Board>) solution()).size() - 1;
+      return ((Stack<Board>) solution()).size() - 1;
     } else {
       return -1;
     }
@@ -72,9 +70,9 @@ public class Solver {
 
     if (isSolvable()) {
       do {
-        solution.add(current.mBoard);
+        solution.push(current.mBoard);
         current = current.mPrev;
-      } while (current.mPrev != null);
+      } while (current != null);
     } else {
       return null;
     }
