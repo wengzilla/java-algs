@@ -58,7 +58,7 @@ public class Solver {
     // min number of moves to solve initial board; -1 if no solution
     
     if (isSolvable()) {
-      return ((ArrayList<Board>) solution()).size();
+      return ((ArrayList<Board>) solution()).size() - 1;
     } else {
       return -1;
     }
@@ -71,10 +71,10 @@ public class Solver {
     Node current = currentNode;
 
     if (isSolvable()) {
-      while (current.mPrev != null) {
+      do {
         solution.add(current.mBoard);
         current = current.mPrev;
-      }
+      } while (current.mPrev != null);
     } else {
       return null;
     }
